@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>.NET Quiz Arena</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="wrap">
+
+  <!-- SETUP -->
+  <div id="setup">
+    <div class="card">
+      <div class="hero">
+        <div class="emoji-big">🧪</div>
+        <h1>.NET Quiz Arena</h1>
+        <p>100 items · C# · CLR · BCL · ADO.NET · ASP.NET · Assemblies</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="muted" style="margin-bottom:8px; font-weight:600">Sections</div>
+      <div id="filters"></div>
+
+      <div class="row" style="margin-top:16px">
+        <div>
+          <label class="muted">Count</label>
+          <select id="count">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="1200" selected>All (1200)</option>
+          </select>
+        </div>
+        <div>
+          <label class="muted">Mode</label>
+          <select id="mode">
+            <option value="practice" selected>Practice (instant)</option>
+            <option value="exam">Exam (timed)</option>
+          </select>
+        </div>
+        <div>
+          <label class="muted">Minutes</label>
+          <input id="minutes" type="number" value="30" min="1">
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:16px">
+        <button onclick="startQuiz()" style="flex:2">🚀 Start</button>
+        <button onclick="toggleShuffle()" class="ghost" id="shuffleBtn" style="flex:1">🔀 Shuffle ON</button>
+      </div>
+      <p class="hint">Keyboard: <kbd>1</kbd>–<kbd>4</kbd> pick · <kbd>Enter</kbd> next</p>
+    </div>
+
+    <div class="card" id="bestCard" style="display:none">
+      <div class="row" style="align-items:center">
+        <div style="flex:1">
+          <div class="muted">Personal best</div>
+          <div style="font-size:1.6rem; font-weight:800; color:var(--gold)" id="bestScore">—</div>
+        </div>
+        <button class="ghost" onclick="resetBest()" style="flex:0 0 auto">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="hidden">
+    <div class="card">
+      <div class="stats-bar">
+        <div class="stat xp"><div class="lbl">XP</div><div class="val" id="xpVal">0</div></div>
+        <div class="stat streak"><div class="lbl">Streak</div><div class="val" id="streakVal">0</div></div>
+        <div class="stat combo" id="comboStat"><div class="lbl">Combo</div><div class="val" id="comboVal">×1</div></div>
+        <div class="timer-ring hidden" id="timerRing">
+          <svg width="56" height="56">
+            <circle class="bg" cx="28" cy="28" r="23"></circle>
+            <circle class="fg" id="timerCircle" cx="28" cy="28" r="23"></circle>
+          </svg>
+          <div class="txt" id="timerTxt">—</div>
+        </div>
+      </div>
+
+      <div class="progress"><div id="prog"></div></div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+        <span class="muted" id="counter">Question 1 / 100</span>
+        <span id="sectionBadge"></span>
+      </div>
+
+      <h2 id="qText"></h2>
+      <div id="qCode"></div>
+      <div id="qOpts"></div>
+      <div id="qShort" class="hidden">
+        <textarea id="shortInput" placeholder="Type your answer…" rows="2"></textarea>
+      </div>
+
+      <div class="row" style="margin-top:16px">
+        <button id="nextBtn" onclick="nextQ()" disabled style="flex:2">Next</button>
+        <button onclick="finish()" class="ghost" style="flex:1">End</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" class="hidden">
+    <div class="card">
+      <div style="text-align:center">
+        <div class="big-score" id="scoreText">0</div>
+        <div class="grade" id="gradeText"></div>
+      </div>
+      <div class="achievements" id="achievements"></div>
+      <div class="breakdown" id="breakdown"></div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <button onclick="location.reload()" class="ghost">🔄 New Quiz</button>
+        <button onclick="retryWrong()" id="retryWrongBtn" class="ghost">🎯 Retry Wrong</button>
+      </div>
+      <div id="review"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/questions.js"></script>
+<script src="js/code_questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
